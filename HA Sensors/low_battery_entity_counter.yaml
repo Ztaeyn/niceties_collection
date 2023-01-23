@@ -1,0 +1,29 @@
+# This sensor checks all entities with a "battery" as part of the name, and outputs the amount of devices with less than X%. 
+# I use this as for a conditional card on my main page, displaying it when count <= 1, linking it to a page with all battery entities displayed.
+
+# How to configure, line number based on the Github file
+# Line 13: Add devices to be ignored
+# Line 20: Set the battery percentage limit, a battery level equal or lower will increase the sensor count.
+
+- platform: template
+  sensors:
+    devices_with_low_battery:
+      friendly_name: 'Devices with low battery'
+      unit_of_measurement: devices
+      value_template: >-
+        {% set ignore_entities = ['sensor.id_battery_level_low', 'sensor.sakolaas_mobil_battery_level', 'sensor.irene_mobil_battery_level'] %}
+        {{ states.sensor
+          | selectattr('attributes.device_class', 'eq', 'battery')
+          | rejectattr('entity_id', 'in', ignore_entities)
+          | map(attribute='state')
+          | reject('in', ['unknown', 'unavailable'])
+          | map('int', -1) | select('le', 20)
+          |select('ge', 0)
+          | list | count
+        }}
+      icon_template: >-
+        {% if is_state('sensor.devices_with_low_battery', '0') %}
+          mdi:check-circle
+        {% else %}
+          mdi:battery-alert
+        {% endif %}
