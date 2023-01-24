@@ -1,0 +1,18 @@
+#Use this for the Actions fields of an automation.
+#This action will trigger a random color from the listed colors. Perfect for Hue and Ikea.
+#NOTE: These names are based on Hue lamps, some colors won't work on Ikea Tradfri, and probably go white for that instance. I use this for 5 different lights on a room for some fancy mix of colors.
+#I'm planning on creating a list separately for those two systems.
+
+# Reddit source of Hue colors:
+https://docs.google.com/spreadsheets/d/1cvYxbtWWINe746zv4U8LUWs6BL1vC05XOxeMKud64wI/edit#gid=0
+
+
+#Automation Action:
+service: light.turn_on
+target:
+  entity_id: light.livingroom3_mediabenk
+data:
+  color_name: >-
+    {{ ['lawngreen', 'blueviolet', 'magenta', 'yellow', 'red', 'candlelight',
+    'chocolate', 'coral', 'tomato', 'vermilion', 'pink', 'magenta', 'indigo',
+    'deep sky blue', 'aquamarine', 'lime'] | random }}
