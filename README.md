@@ -19,3 +19,6 @@ HA UI:
   
     <img src="https://user-images.githubusercontent.com/58105460/214364246-2f30003d-8cb7-4bef-a085-502dc491e809.png" width="400">
     
+Automations:
+* lights_random_predefined_colors.yaml
+  * Add this as an action to generate a random (predefined list) color of the light(s).
