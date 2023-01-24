@@ -1,0 +1,90 @@
+# Samsung washer, via Smartthings integration
+# 2 rows: Running + remaining time, and sensor state.
+# Color animation via HACS card mod. https://github.com/thomasloven/lovelace-card-mod
+
+
+type: vertical-stack
+cards:
+  - type: horizontal-stack
+    cards:
+      - type: custom:mushroom-entity-card
+        entity: sensor.washer_machine_state
+        name: Vaskemaskin
+        icon_type: icon
+        fill_container: true
+        layout: vertical
+      - type: custom:mushroom-entity-card
+        entity: sensor.remaining_time
+        icon: mdi:timer-refresh-outline
+        fill_container: true
+        layout: vertical
+  - square: false
+    columns: 5
+    type: grid
+    cards:
+      - type: custom:button-card
+        entity: sensor.washer_job_state
+        icon: mdi:washing-machine
+        aspect_ratio: 1/1
+        show_state: false
+        name: Inaktiv
+        styles:
+          icon:
+            - color: |
+                [[[
+                  if (entity.state == 'none'  && states['switch.vaskemaskin'].state === 'on')
+                    return 'orange';
+                    else return '#50729c';
+                ]]] 
+      - type: custom:button-card
+        entity: sensor.washer_job_state
+        icon: mdi:waves
+        aspect_ratio: 1/1
+        show_state: false
+        name: Vasking
+        styles:
+          icon:
+            - color: |
+                [[[
+                  if (entity.state == 'wash' ) return 'orange' 
+                  else return '#50729c';
+                ]]]
+      - type: custom:button-card
+        entity: sensor.washer_job_state
+        icon: mdi:water
+        aspect_ratio: 1/1
+        show_state: false
+        name: Skylle
+        styles:
+          icon:
+            - color: |
+                [[[
+                  if (entity.state == 'rinse' ) return 'orange' 
+                  else return '#50729c';
+                ]]]
+      - type: custom:button-card
+        entity: sensor.washer_job_state
+        icon: mdi:fan
+        aspect_ratio: 1/1
+        show_state: false
+        name: Spin
+        styles:
+          icon:
+            - color: |
+                [[[
+                  if (entity.state == 'spin' ) return 'orange' 
+                  else return '#50729c';
+                ]]]
+      - type: custom:button-card
+        entity: sensor.washer_job_state
+        icon: mdi:washing-machine
+        aspect_ratio: 1/1
+        show_state: false
+        name: Tørker
+        styles:
+          icon:
+            - color: |
+                [[[
+                  if (entity.state == 'drying' ) return 'orange' 
+                  else return '#50729c';
+                ]]]
