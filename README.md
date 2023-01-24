@@ -22,3 +22,5 @@ HA UI:
 Automations:
 * lights_random_predefined_colors.yaml
   * Add this as an action to generate a random (predefined list) color of the light(s).
+* automatic_light_with_dim.yaml
+  * My own automatic lights by motion, where current brightness state is saved, lights are dimmed down, then previous brightness state restored at the next motion.
