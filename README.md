@@ -10,3 +10,12 @@ HA Sensors:
     
 * count_open_doorswindows.yaml
   * A sensor for counting open doors and windows.
+
+
+
+HA UI:
+* samsung_washer.yaml
+  * UI card displaying the current state of the washer
+  
+    <img src="https://user-images.githubusercontent.com/58105460/214364246-2f30003d-8cb7-4bef-a085-502dc491e809.png" width="400">
+    
