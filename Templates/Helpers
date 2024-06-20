@@ -55,3 +55,16 @@ The following List and Total will exclude the above groups.
 {% else %}
   {{qty}}
 {% endif %}
+
+# List all open windows and doors # Exclude above groups
+{% set doorwin = states.binary_sensor
+  | select('match', '.*contact')
+  | rejectattr('entity_id', 'search', ('.security*|all*'))
+  | selectattr('state', 'eq', 'on')
+ | map(attribute='name') | list %}
+{% set qty = doorwin | count %}
+{% if qty == 0 %}
+  Ingen
+{% else %}
+  {{doorwin | join(', ')}}
+{% endif %}
