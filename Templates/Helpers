@@ -44,9 +44,14 @@ The following List and Total will exclude the above groups.
 {% endif %}
 
 # Count open windows
-{% set number_open = (expand('group.all_window_contacts') | selectattr('state', 'eq', 'on') | list | count) %}
-        {% if number_open > 0 %}
-          {{number_open}}
-        {% else %}
-          0
-        {% endif %}
+{% set windows = states.binary_sensor
+  | select('match', '.*window.contact')
+  | rejectattr('entity_id', 'in', ['binary_sensor.security_check_away','binary_sensor.security_check_home','binary_sensor.security_doors_and_windows','binary_sensor.all_window_contacts'])
+  | selectattr('state', 'eq', 'on')
+  | map(attribute='name') | list %}
+{% set qty = windows | count %}
+{% if qty == 0 %}
+  0
+{% else %}
+  {{qty}}
+{% endif %}
