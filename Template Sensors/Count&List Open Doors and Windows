@@ -1,13 +1,13 @@
 # Group of all
-# binary_sensor.all_door_contacts
-# binary_sensor.security - Binary Sensor Group of relevant sensors for windows and doors, all when gone, specific when home.
+# binary_sensor.all_door/window_contacts || Excluded from list/total
+# binary_sensor.security* - Group of specific doors/windows for defining security when home or away || Excluded from list/total
 
 
 The following List and Total will exclude the above groups.
 # List open doors
 {% set doors = states.binary_sensor
   | select('match', '.*door.contact')
-  | rejectattr('entity_id', 'in', ['binary_sensor.security_check_away','binary_sensor.security_check_home','binary_sensor.security_doors_and_windows','binary_sensor.all_door_contacts'])
+  | rejectattr('entity_id', 'search', ('.security*|all*'))  
   | selectattr('state', 'eq', 'on')
   | map(attribute='name') | list %}
 {% set qty = doors | count %}
@@ -20,7 +20,7 @@ The following List and Total will exclude the above groups.
 # Count open doors
 {% set doors = states.binary_sensor
   | select('match', '.*door.contact')
-  | rejectattr('entity_id', 'in', ['binary_sensor.security_check_away','binary_sensor.security_check_home','binary_sensor.security_doors_and_windows','binary_sensor.all_door_contacts'])
+  | rejectattr('entity_id', 'search', ('.security*|all*'))
   | selectattr('state', 'eq', 'on')
   | map(attribute='name') | list %}
 {% set qty = doors | count %}
@@ -33,7 +33,7 @@ The following List and Total will exclude the above groups.
 # List open windows
 {% set windows = states.binary_sensor
   | select('match', '.*window.contact')
-  | rejectattr('entity_id', 'in', ['binary_sensor.security_check_away','binary_sensor.security_check_home','binary_sensor.security_doors_and_windows','binary_sensor.all_window_contacts'])
+  | rejectattr('entity_id', 'search', ('.security*|all*'))
   | selectattr('state', 'eq', 'on')
  | map(attribute='name') | list %}
 {% set qty = windows | count %}
@@ -46,7 +46,7 @@ The following List and Total will exclude the above groups.
 # Count open windows
 {% set windows = states.binary_sensor
   | select('match', '.*window.contact')
-  | rejectattr('entity_id', 'in', ['binary_sensor.security_check_away','binary_sensor.security_check_home','binary_sensor.security_doors_and_windows','binary_sensor.all_window_contacts'])
+  | rejectattr('entity_id', 'search', ('.security*|all*'))
   | selectattr('state', 'eq', 'on')
   | map(attribute='name') | list %}
 {% set qty = windows | count %}
